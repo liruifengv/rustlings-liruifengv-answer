@@ -29,12 +29,11 @@ impl ParsePosNonzeroError {
 fn parse_pos_nonzero(s: &str)
     -> Result<PositiveNonzeroInteger, ParsePosNonzeroError>
 {
-    let res = s.parse(); 
-    match res {
-      Ok(x) => PositiveNonzeroInteger::new(x)
-      .map_err(ParsePosNonzeroError::from_creation),
-      Err(e) => Err(ParsePosNonzeroError::from_parseint(e)),
-    }
+    let x = s.parse()
+        .map_err(ParsePosNonzeroError::from_parseint)?; 
+
+    PositiveNonzeroInteger::new(x)
+        .map_err(ParsePosNonzeroError::from_creation)
 }
 
 // Don't change anything below this line.
